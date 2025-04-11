@@ -33,7 +33,8 @@ const Registration = () => {
       setLoading(true);
       dispatch(showLoading());
       
-      const res = await axios.post('/api/v1/user/register', values);
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/user/register`, values);
+
       
       dispatch(hideLoading());
       setLoading(false);

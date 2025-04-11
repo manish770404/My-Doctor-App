@@ -9,12 +9,10 @@ const HomePage = () => {
   const getUserData = async () => {
     try {
       const res = await axios.get(
-        "/api/v1/user/getAllDoctors",
-
+        `${process.env.REACT_APP_API}/api/v1/user/getAllDoctors`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
- 
           },
         }
       );
@@ -25,7 +23,7 @@ const HomePage = () => {
       console.log(error);
     }
   };
-
+  
   useEffect(() => {
     getUserData();
   }, []);

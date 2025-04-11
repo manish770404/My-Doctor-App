@@ -11,12 +11,14 @@ const NotificationPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
+  const API = process.env.REACT_APP_API;
+
   // Mark all as read
   const handleMarkAllRead = async () => {
     try {
       dispatch(showLoading());
       const res = await axios.post(
-        "/api/v1/user/mark-all-notifications-read",
+        `${API}/api/v1/user/mark-all-notifications-read`,
         { userId: user._id },
         {
           headers: {
@@ -43,7 +45,7 @@ const NotificationPage = () => {
     try {
       dispatch(showLoading());
       const res = await axios.post(
-        "/api/v1/user/delete-all-notifications",
+        `${API}/api/v1/user/delete-all-notifications`,
         { userId: user._id },
         {
           headers: {

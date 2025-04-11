@@ -13,16 +13,16 @@ export default function ProtectedRoute({ children }) {
   //eslint-disable-next-line
   const getUser = async () => {
     try {
-      dispatch(showLoading());
       const res = await axios.post(
-        "/api/v1/user/getUserData",
-        {  },
+        `${process.env.REACT_APP_API}/api/v1/user/getUserData`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
+      
       dispatch(hideLoading());
       if (res.data.success) {
         dispatch(setUser(res.data.data));

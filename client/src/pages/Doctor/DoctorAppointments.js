@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../../components/Layout";
-
 import axios from "axios";
-
 import moment from "moment";
 import { message, Table } from "antd";
 
 const DoctorAppointments = () => {
   const [appointments, setAppointments] = useState([]);
 
+  // Fetch appointments
   const getAppointments = async () => {
     try {
-      const res = await axios.get("/api/v1/doctor//doctor-appointments", {
+      const res = await axios.get("/api/v1/doctor/doctor-appointments", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -20,7 +19,8 @@ const DoctorAppointments = () => {
         setAppointments(res.data.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching appointments:", error);
+      message.error("Failed to fetch appointments");
     }
   };
 
@@ -28,11 +28,15 @@ const DoctorAppointments = () => {
     getAppointments();
   }, []);
 
+  // Handle status change
   const handleStatus = async (record, status) => {
     try {
       const res = await axios.post(
         "/api/v1/doctor/update-status",
-        { appointmentsId: record._id, status },
+        {
+          appointmentsId: record._id,
+          status,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,11 +48,12 @@ const DoctorAppointments = () => {
         getAppointments();
       }
     } catch (error) {
-      console.log(error);
-      message.error("Something Went Wrong");
+      console.error("Status update error:", error);
+      message.error("Something went wrong while updating status");
     }
   };
 
+  // Table columns definition
   const columns = [
     {
       title: "ID",
@@ -71,32 +76,30 @@ const DoctorAppointments = () => {
     {
       title: "Actions",
       dataIndex: "actions",
-      render: (text, record) => (
-        <div className="d-flex">
-          {record.status === "pending" && (
-            <div className="d-flex">
-              <button
-                className="btn btn-success"
-                onClick={() => handleStatus(record, "approved")}
-              >
-                Approved
-              </button>
-              <button
-                className="btn btn-danger ms-2"
-                onClick={() => handleStatus(record, "reject")}
-              >
-                Reject
-              </button>
-            </div>
-          )}
-        </div>
-      ),
+      render: (text, record) =>
+        record.status === "pending" && (
+          <div className="d-flex">
+            <button
+              className="btn btn-success"
+              onClick={() => handleStatus(record, "approved")}
+            >
+              Approve
+            </button>
+            <button
+              className="btn btn-danger ms-2"
+              onClick={() => handleStatus(record, "rejected")}
+            >
+              Reject
+            </button>
+          </div>
+        ),
     },
   ];
+
   return (
     <Layout>
-      <h1>Appoinmtnets Lists</h1>
-      <Table columns={columns} dataSource={appointments} />
+      <h1 className="text-center">Appointments List</h1>
+      <Table columns={columns} dataSource={appointments} rowKey="_id" />
     </Layout>
   );
 };

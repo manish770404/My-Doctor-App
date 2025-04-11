@@ -3,13 +3,16 @@ import Layout from "./../../components/Layout";
 import axios from "axios";
 import { message, Table } from "antd";
 
+// 👇 Use the environment variable
+const API = process.env.REACT_APP_API;
+
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
 
   // Fetch all doctors
   const getDoctors = async () => {
     try {
-      const res = await axios.get("/api/v1/admin/getAllDoctors", {
+      const res = await axios.get(`${API}/api/v1/admin/getAllDoctors`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -26,7 +29,7 @@ const Doctors = () => {
   const handleAccountStatus = async (record, status) => {
     try {
       const res = await axios.post(
-        "/api/v1/admin/changeAccountStatus",
+        `${API}/api/v1/admin/changeAccountStatus`,
         { doctorId: record._id, userId: record.userId, status: status },
         {
           headers: {
@@ -36,8 +39,6 @@ const Doctors = () => {
       );
       if (res.data.success) {
         message.success(res.data.message);
-        
-        // Update the doctors list locally after status change
         setDoctors((prevDoctors) =>
           prevDoctors.map((doc) =>
             doc._id === record._id ? { ...doc, status } : doc
@@ -50,7 +51,6 @@ const Doctors = () => {
     }
   };
 
-  // Fetch doctors data on component mount
   useEffect(() => {
     getDoctors();
   }, []);
@@ -86,7 +86,10 @@ const Doctors = () => {
               Approve
             </button>
           ) : (
-            <button className="btn btn-danger" onClick={() => handleAccountStatus(record, "rejected")}>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleAccountStatus(record, "rejected")}
+            >
               Reject
             </button>
           )}
