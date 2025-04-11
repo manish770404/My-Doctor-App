@@ -1,26 +1,28 @@
-const express =require('express')
-const authMiddleware =require('../middlewares/authMiddleware')
-const { getDoctorInfoController, updateProfileController, getDoctorByIdController, doctorAppointmentsController, updateStatusController } = require('../controllers/doctorCtrl')
-const router =express.Router()
+const express = require("express");
+const authMiddleware = require("../middlewares/authMiddleware");
+const {
+  getDoctorInfoController,
+  updateProfileController,
+  getDoctorByIdController,
+  doctorAppointmentsController,
+  updateStatusController,
+} = require("../controllers/doctorCtrl");
 
-//post Single Doc Info
+const router = express.Router();
 
-router.post('/getDoctorInfo',authMiddleware,getDoctorInfoController)
+// Get doctor info
+router.post("/getDoctorInfo", authMiddleware, getDoctorInfoController);
 
-//POST UPDATE PROFILE
-router.post('/updateProfile', authMiddleware, updateProfileController);
+// Update doctor profile
+router.post("/updateProfile", authMiddleware, updateProfileController);
 
-//POST GET SINGLE INFO
-router.post('/getDoctorById' ,authMiddleware, getDoctorByIdController)
+// Get single doctor by ID
+router.post("/getDoctorById", authMiddleware, getDoctorByIdController);
 
-//GET Appointments
-router.get(
-    "/doctor-appointments",
-    authMiddleware,
-    doctorAppointmentsController
-  );
+// Get doctor's appointments
+router.get("/doctor-appointments", authMiddleware, doctorAppointmentsController);
 
-  //POST Update Status
+// Update appointment status
 router.post("/update-status", authMiddleware, updateStatusController);
 
-module.exports =router
+module.exports = router;

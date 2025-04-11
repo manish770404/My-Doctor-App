@@ -11,7 +11,7 @@ const NotificationPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
-  // Handle marking all notifications as read
+  // Mark all as read
   const handleMarkAllRead = async () => {
     try {
       dispatch(showLoading());
@@ -27,17 +27,18 @@ const NotificationPage = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
+        window.location.reload();
       } else {
         message.error(res.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());
       console.error(error);
-      message.error("Something went wrong while marking notifications as read.");
+      message.error("Error marking all as read");
     }
   };
 
-  // Handle deleting all read notifications
+  // Delete all read
   const handleDeleteAllRead = async () => {
     try {
       dispatch(showLoading());
@@ -53,22 +54,24 @@ const NotificationPage = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
+        window.location.reload();
       } else {
         message.error(res.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());
       console.error(error);
-      message.error("Something went wrong while deleting notifications.");
+      message.error("Error deleting all read notifications");
     }
   };
 
-  return (
-    <Layout>
-      <h4 className="p-3 text-center">Notification Page</h4>
-      <Tabs>
-        {/* Unread Notifications Tab */}
-        <Tabs.TabPane tab="Unread" key="1">
+  // Tab content items for Ant Design Tabs
+  const tabItems = [
+    {
+      label: "Unread",
+      key: "1",
+      children: (
+        <>
           <div className="d-flex justify-content-end">
             <h4
               className="p-2"
@@ -96,10 +99,14 @@ const NotificationPage = () => {
           ) : (
             <p>No unread notifications.</p>
           )}
-        </Tabs.TabPane>
-
-        {/* Read Notifications Tab */}
-        <Tabs.TabPane tab="Read" key="2">
+        </>
+      ),
+    },
+    {
+      label: "Read",
+      key: "2",
+      children: (
+        <>
           <div className="d-flex justify-content-end">
             <h4
               className="p-2"
@@ -127,8 +134,15 @@ const NotificationPage = () => {
           ) : (
             <p>No read notifications.</p>
           )}
-        </Tabs.TabPane>
-      </Tabs>
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <Layout>
+      <h4 className="p-3 text-center">Notification Page</h4>
+      <Tabs defaultActiveKey="1" items={tabItems} />
     </Layout>
   );
 };

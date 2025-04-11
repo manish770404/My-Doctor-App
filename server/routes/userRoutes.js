@@ -10,55 +10,33 @@ const {
   bookeAppointmnetController,
   bookingAvailabilityController,
   userAppointmentsController,
+  markAllNotificationController,
 } = require("../controllers/userCtrl");
+
 const authMiddleware = require("../middlewares/authMiddleware");
 
-//router onject
 const router = express.Router();
 
-//routes
-//LOGIN || POST
+// Auth Routes
 router.post("/login", loginController);
-
-//REGISTER || POST
 router.post("/register", registerController);
-
-//Auth || post
 router.post("/getuserData", authMiddleware, authController);
 
-//ApplyDoctor || post
+// Doctor Routes
 router.post("/apply-doctor", authMiddleware, applyDoctorController);
-
-//Notification || post
-router.post(
-  "/get-all-notification",
-  authMiddleware,
-  getAllNotificationController
-);
-
-//Notification || post
-router.post(
-  "/delete-all-notification",
-  authMiddleware,
-  deleteAllNotificationController
-);
-
-//GET ALL DOC
 router.get("/getAllDoctors", getAllDoctorsController);
 
-//BOOK APPOINTMENT
+// Notification Routes
+router.post("/get-all-notification", authMiddleware, getAllNotificationController);
+router.post("/delete-all-notifications", authMiddleware, deleteAllNotificationController);
 
+// Appointment Routes
 router.post("/book-appointment", authMiddleware, bookeAppointmnetController);
-
-//Booking Avliability
-router.post(
-  "/booking-availbility",
-  authMiddleware,
-  bookingAvailabilityController
-);
-
-
-
-//Appointments List
+router.post("/booking-availbility", authMiddleware, bookingAvailabilityController);
 router.get("/user-appointments", authMiddleware, userAppointmentsController);
+router.post(
+  "/mark-all-notifications-read",
+  authMiddleware,
+  markAllNotificationController);
+
 module.exports = router;

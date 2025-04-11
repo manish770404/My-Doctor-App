@@ -1,13 +1,523 @@
-.form-container{
-    display:flex;
-  align-items:center;
-  justify-content:center;
-    height:100vh;
-    
+/* Advanced Modern Login Form Styling */
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --gradient-start: #4f46e5;
+  --gradient-end: #7c3aed;
+  --text-primary: #2d3748;
+  --text-secondary: #64748b;
+  --bg-color: #f9fafb;
+  --card-bg: rgba(255, 255, 255, 0.98);
+  --shadow-color: rgba(79, 70, 229, 0.2);
+  --error-color: #ef4444;
+  --success-color: #10b981;
+  --input-bg: #f3f4f6;
+  --animation-speed: 0.3s;
 }
-.register-form{
-    border:1px solid gray;
-    padding :30px;
-    width:30%;
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff, #e0eafc);
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Background animated shapes */
+.form-container::before,
+.form-container::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  opacity: 0.05;
+  z-index: 0;
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.form-container::before {
+  top: -250px;
+  left: -250px;
+}
+
+.form-container::after {
+  bottom: -250px;
+  right: -250px;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(50px, 30px) rotate(10deg); }
+}
+
+.register-form {
+  background-color: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px var(--shadow-color), 0 10px 20px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  max-width: 420px;
+  width: 100%;
+  border: none;
+  position: relative;
+  z-index: 1;
+  transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease;
+  overflow: hidden;
+}
+
+.register-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+}
+
+.register-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px var(--shadow-color), 0 15px 25px rgba(0, 0, 0, 0.05);
+}
+
+.register-form h3 {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.form-logo {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-subtitle {
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: -15px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.register-form .ant-form-item {
+  margin-bottom: 24px;
+}
+
+.register-form .ant-form-item-label {
+  padding-bottom: 8px;
+}
+
+.register-form .ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.register-form .ant-input {
+  padding: 12px 16px 12px 40px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background-color: var(--input-bg);
+  font-size: 15px;
+  transition: all var(--animation-speed) ease;
+  color: var(--text-primary);
+}
+
+.register-form .ant-input:hover {
+  border-color: #cbd5e1;
+  background-color: #edf2f7;
+}
+
+.register-form .ant-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background-color: white;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.btn {
+  width: 100%;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  margin-top: 10px;
+  transition: all var(--animation-speed) ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  border: none;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Button loading animation */
+.btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  right: 15px;
+  top: calc(50% - 10px);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-divider {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.form-divider::before,
+.form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: #e2e8f0;
+}
+
+.form-divider::before {
+  margin-right: 15px;
+}
+
+.form-divider::after {
+  margin-left: 15px;
+}
+
+.social-logins {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: #f3f4f6;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all var(--animation-speed) ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  background-color: #edf2f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.social-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.register-form a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 15px;
+  transition: color var(--animation-speed) ease;
+  font-weight: 500;
+}
+
+.register-form a:hover {
+  color: var(--primary-hover);
+  text-decoration: none;
+}
+
+.form-footer span {
+  color: var(--text-secondary);
+  margin-right: 5px;
+}
+
+/* Form validation styling */
+.error-message {
+  color: var(--error-color);
+  font-size: 13px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.error-message i {
+  margin-right: 5px;
+}
+
+.success-message {
+  color: var(--success-color);
+  font-size: 13px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* Password strength indicator */
+.password-strength {
+  margin-top: 8px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #e2e8f0;
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-weak {
+  width: 33%;
+  background-color: #ef4444;
+}
+
+.strength-medium {
+  width: 66%;
+  background-color: #f59e0b;
+}
+
+.strength-strong {
+  width: 100%;
+  background-color: #10b981;
+}
+
+/* Remember me checkbox */
+.remember-me {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container input {
+  margin-right: 8px;
+}
+
+.forgot-password {
+  font-size: 14px;
+}
+
+/* Form animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.register-form .ant-form-item {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.register-form .ant-form-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.register-form .ant-form-item:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.register-form .form-footer {
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  animation: slideIn 0.3s ease forwards;
+  z-index: 1000;
+}
+
+.toast-success {
+  border-left: 4px solid var(--success-color);
+}
+
+.toast-error {
+  border-left: 4px solid var(--error-color);
+}
+
+.toast-icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.toast-success .toast-icon {
+  color: var(--success-color);
+}
+
+.toast-error .toast-icon {
+  color: var(--error-color);
+}
+
+.toast-message {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .register-form {
+    padding: 30px 20px;
+    border-radius: 18px;
+  }
+  
+  .register-form h3 {
+    font-size: 24px;
+  }
+  
+  .social-logins {
+    gap: 10px;
+  }
+  
+  .social-btn {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --input-bg: #334155;
+    --shadow-color: rgba(99, 102, 241, 0.2);
+  }
+  
+  .form-container {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+  }
+  
+  .register-form .ant-input {
+    border-color: #475569;
+    color: #f8fafc;
+  }
+  
+  .register-form .ant-input:hover {
+    border-color: #64748b;
+    background-color: #334155;
+  }
+  
+  .register-form .ant-input:focus {
+    background-color: #1e293b;
+  }
+  
+  .social-btn {
+    background-color: #334155;
+    border-color: #475569;
+  }
+  
+  .social-btn:hover {
+    background-color: #475569;
+  }
+  
+  .form-divider::before,
+  .form-divider::after {
+    background-color: #475569;
+  }
 }
