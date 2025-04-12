@@ -51,8 +51,8 @@ const Login = () => {
     <div className="form-container">
       <Form layout="vertical" onFinish={onFinishHandler} className="register-form">
         <div className="form-header">
-          <div className="form-logo">A</div>
-          <h3>Welcome Back</h3>
+          <div className="form-logo">M</div>
+          <h3>Welcome Back to ManiaCure</h3>
           <p className="form-subtitle">Sign in to continue to your account</p>
         </div>
 
